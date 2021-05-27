@@ -13,3 +13,12 @@ RUN wget https://downloads.apache.org/maven/maven-3/${maven_version}/binaries/ap
     && tar xvfz /tmp/apache-maven-${maven_version}-bin.tar.gz -C /usr/local \
     && rm -rf /tmp/apache-maven-${maven_version}-bin.tar.gz \
     && yum clean all
+
+EXPOSE 5000
+ENV tomcat_version=9.0.46
+RUN wget https://mirrors.estointernet.in/apache/tomcat/tomcat-9/v${tomcat_version}/bin/apache-tomcat-${tomcat_version}.tar.gz -P /tmp \
+    && tar xvfz /tmp/apache-tomcat-${tomcat_version}.tar.gz -C /opt/ \
+    && rm -rf /tmp/apache-tomcat-9*.tar.gz \
+    && yum clean all
+ADD server.xml /opt/apache-tomcat-${tomcat_version}/conf/
+ADD tomcat-users.xml /opt/apache-tomcat-${tomcat_version}/conf/
